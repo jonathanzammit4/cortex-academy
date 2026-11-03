@@ -1,0 +1,167 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><title>Cortex · AI & CS Academy</title>
+<style>
+:root{--bg:#f5f6fb;--sf:#fff;--tx:#161a2b;--mu:#5d6580;--bd:#e2e5f0;--ac:#6246ea;--a2:#14b8a6;--ok:#16a34a;--bad:#dc2626;--cb:#12142a;--ct:#dfe3ff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0c0e1c;--sf:#151833;--tx:#eceefc;--mu:#9aa2c8;--bd:#272b4d;--ac:#8b78ff;--cb:#080a16}}
+:root[data-theme=dark]{--bg:#0c0e1c;--sf:#151833;--tx:#eceefc;--mu:#9aa2c8;--bd:#272b4d;--ac:#8b78ff;--cb:#080a16}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.65 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);background:var(--sf);z-index:10}
+header{position:sticky;top:env(safe-area-inset-top,0px);z-index:9;background:var(--sf);border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:6px;padding:8px 14px;overflow-x:auto}
+header b{font-size:18px;background:linear-gradient(90deg,var(--ac),var(--a2));-webkit-background-clip:text;background-clip:text;color:transparent;margin-right:8px;white-space:nowrap}
+header a,header button{color:var(--mu);text-decoration:none;font:600 14px inherit;font-family:inherit;padding:6px 11px;border-radius:99px;white-space:nowrap;background:none;border:0;cursor:pointer}
+header a.on{background:var(--ac);color:#fff}header button{margin-left:auto}
+main{max-width:860px;margin:0 auto;padding:20px 16px 60px;animation:f .35s ease}@keyframes f{from{opacity:0;transform:translateY(8px)}}
+h1{font-size:28px;line-height:1.2;margin:.2em 0}h2{margin:1.4em 0 .5em}h3{margin:1.3em 0 .3em;color:var(--ac)}
+.card{display:block;background:var(--sf);border:1px solid var(--bd);border-radius:16px;padding:14px 16px;margin:10px 0;color:inherit;text-decoration:none;transition:.2s}
+a.card:hover{transform:translateY(-2px);border-color:var(--ac)}
+.hero{background:linear-gradient(135deg,var(--ac),var(--a2));color:#fff;border-radius:20px;padding:22px;display:flex;gap:18px;align-items:center}
+.hero p{margin:.2em 0;opacity:.92}.muted{color:var(--mu);font-size:14px}
+.tag{display:inline-block;font-size:12px;font-weight:600;padding:2px 9px;border-radius:99px;background:var(--bg);border:1px solid var(--bd);color:var(--mu);margin:2px 4px 2px 0}
+.bar{height:8px;background:var(--bd);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:var(--ac);transition:width .4s}
+.btn{background:var(--ac);color:#fff;border:0;border-radius:10px;padding:8px 14px;font:600 14px inherit;font-family:inherit;cursor:pointer;margin:3px 4px 3px 0}.btn.g{background:var(--bg);color:var(--tx);border:1px solid var(--bd)}
+pre{background:var(--cb);color:var(--ct);padding:14px;border-radius:12px;overflow-x:auto;font:13px/1.5 ui-monospace,Menlo,Consolas,monospace}code{font-family:ui-monospace,Menlo,monospace;font-size:.9em}
+.wd{background:var(--sf);border:1px solid var(--ac);border-radius:16px;padding:14px;margin:16px 0}
+.wd svg{width:100%;height:auto;max-height:230px}.wd input[type=range]{width:100%;accent-color:var(--ac)}
+.opt{display:block;width:100%;text-align:left;margin:6px 0;padding:10px 12px;border-radius:10px;border:1px solid var(--bd);background:var(--sf);color:var(--tx);font:inherit;cursor:pointer}
+.opt.ok{border-color:var(--ok);background:#16a34a22}.opt.no{border-color:var(--bad);background:#dc262622}
+input[type=search],textarea,select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--bd);background:var(--sf);color:var(--tx);font:inherit}
+.chips{display:flex;flex-wrap:wrap;gap:6px}.chip{padding:6px 10px;border-radius:9px;border:1px solid var(--bd);font-size:13px;font-weight:600;cursor:pointer;background:var(--bg);color:var(--mu)}.chip.on{background:var(--ac);color:#fff;border-color:var(--ac)}
+.fc{min-height:150px;display:flex;align-items:center;justify-content:center;text-align:center;font-size:19px;padding:20px;cursor:pointer}
+.plan{opacity:.55;border-style:dashed}
+</style></head><body><header id="nav"></header><main id="m"></main>
+<script>
+const $=s=>document.querySelector(s);
+let S;try{S=JSON.parse(localStorage.getItem('cx'))}catch(e){}S=S||{};
+['done','bm','n','q','fc','p'].forEach(k=>S[k]=S[k]||{});
+const save=()=>{try{localStorage.setItem('cx',JSON.stringify(S))}catch(e){}};
+if(S.th)document.documentElement.dataset.theme=S.th;
+const T={py:['Python','#3b82f6'],ml:['ML & Deep Learning','#8b5cf6'],llm:['LLMs & Agents','#ec4899'],sys:['Systems & Cloud','#14b8a6']};
+const PL={py:['Control flow & functions','NumPy & pandas','OOP, typing & testing'],ml:['Linear & logistic regression','Bias, variance & evaluation metrics','Trees & ensembles','Backpropagation','CNNs & optimisers'],llm:['Transformer architecture','Fine-tuning & LoRA','Agents & tool use','Model Context Protocol (MCP)','LLM evaluation'],sys:['Databases & indexes','Load balancing & scaling','Consensus & distributed systems','Containers, Docker & Kubernetes','MLOps & monitoring']};
+const PJ=[['Expense tracker CLI','Build a command-line tool that stores transactions in JSON, summarises by category and handles bad input. Write 5 unit tests.',['py-1']],['Gradient descent from scratch','Implement linear regression with gradient descent in NumPy. Plot the loss curve for 3 learning rates and explain each.',['ml-1']],['Spam classifier','Train a bag-of-words classifier in scikit-learn. Report precision/recall and inspect 10 mistakes by hand.',['ml-1','dl-1']],['Mini-RAG over your notes','Chunk your own notes, embed them, retrieve top-k and answer with an LLM. Write 20 test questions and measure recall@k.',['llm-1','llm-3']],['Cache simulator','Implement LRU and LFU in Python. Replay a skewed access trace and compare hit rates.',['sys-2','py-1']]];
+const L=[
+{id:'py-1',t:'Names, values and mutability',tr:'py',lv:'Beginner',min:12,pre:[],tags:['python','memory','references'],d:'Why variables are labels, not boxes, and how that causes real bugs.',
+b:`<h3>What it is</h3><p>In Python a variable is a <b>name bound to an object</b>. Assignment never copies the object; it adds another label to it.</p>
+<svg viewBox="0 0 400 110" style="width:100%;max-width:440px"><g font-size="14" fill="currentColor"><text x="20" y="35">a</text><text x="20" y="85">b</text></g><path d="M40 32L170 55M40 82L170 60" stroke="var(--ac)" stroke-width="2" fill="none"/><rect x="170" y="35" width="190" height="40" rx="8" fill="none" stroke="var(--a2)" stroke-width="2"/><text x="190" y="61" font-size="14" fill="currentColor">list: [1, 2, 3]</text></svg>
+<h3>Why it matters</h3><p>Two names for one mutable object means a change through one is visible through the other. This causes silent bugs in data pipelines, caches and default arguments.</p>
+<h3>How it works</h3><p>Every object has an identity (<code>id()</code>), a type and a value. <b>Immutable</b> types (int, str, tuple) cannot change, so rebinding creates a new object. <b>Mutable</b> types (list, dict, set) change in place.</p>
+<pre>a = [1, 2]
+b = a            # same object, second label
+b.append(3)
+print(a)         # [1, 2, 3]
+c = a.copy()     # new list (shallow copy)
+c.append(4)
+print(a, c)      # [1, 2, 3] [1, 2, 3, 4]</pre>
+<h3>Limits</h3><p><code>copy()</code> is shallow: nested lists are still shared. Use <code>copy.deepcopy</code> when you need full independence, at a performance cost.</p>`,
+c:['Predict the output of this code, then reveal.<pre>def add(x, acc=[]):\n    acc.append(x)\n    return acc\nprint(add(1))\nprint(add(2))</pre>','[1] then [1, 2]. The default list is created once when the function is defined, so every call shares it. Fix: use acc=None and create a new list inside.'],
+q:[['After b = a where a is a list, b.append(9) runs. What is a?',['Unchanged','Contains 9','Raises an error'],1,'Both names point at the same list object.'],['Which type is immutable?',['list','dict','tuple'],2,'Tuples cannot be modified in place.']],
+f:[['Python variable (model)','A name bound to an object, not a container holding a value.'],['Shallow vs deep copy','Shallow copies the outer container only; deep copies nested objects too.']]},
+{id:'ml-1',t:'Loss and gradient descent',tr:'ml',lv:'Beginner',min:15,pre:['py-1'],tags:['optimisation','loss','gradient','training'],d:'How a model improves: measure error, then step downhill.',
+b:`<h3>What it is</h3><p>Training means choosing parameters that minimise a <b>loss</b>, a number measuring how wrong predictions are. <b>Gradient descent</b> repeatedly moves parameters against the gradient: <code>θ ← θ − η·∇L(θ)</code>, where η is the learning rate.</p>
+<h3>Why it exists</h3><p>Real models have millions to billions of parameters, so you cannot try them all. The gradient gives the locally steepest direction for free via calculus (backpropagation computes it efficiently).</p>
+<h3>How it works</h3><p>Take L(x) = x². Its gradient is 2x, so each step is <code>x ← x(1 − 2η)</code>. That single formula explains the behaviours you can see below: η=0.5 lands on the minimum in one step, 0&lt;η&lt;1 converges (oscillating when η&gt;0.5), η=1 bounces forever, η&gt;1 diverges.</p>`,
+w:'gd',
+b2:`<h3>Where it is used</h3><p>Every neural network is trained with a variant: SGD uses a random mini-batch per step; Adam adapts the step size per parameter.</p>
+<h3>Limits</h3><p>Real loss surfaces are non-convex with saddle points and plateaus. Results depend on learning rate, initialisation and batch size, so tune and monitor the loss curve rather than trusting one run.</p>`,
+q:[['With L = x² and η = 1, what happens?',['Converges quickly','Jumps between x and −x forever','Diverges to infinity'],1,'x ← x(1−2) = −x, so it flips sign each step.'],['Why do we use a mini-batch?',['Cheaper noisy gradient estimate','It is exact','It removes the learning rate'],0,'A small sample approximates the full gradient at a fraction of the cost.'],['The gradient points…',['Toward the minimum','In the direction of steepest increase','Randomly'],1,'So we subtract it.']],
+f:[['Gradient descent update','θ ← θ − η∇L(θ)'],['Learning rate too large?','Overshoots; loss oscillates or diverges.']]},
+{id:'dl-1',t:'The neuron and the network',tr:'ml',lv:'Beginner',min:14,pre:['ml-1'],tags:['neural network','activation','deep learning'],d:'One neuron computes a weighted sum and a nonlinearity. Stack them and you get a network.',
+b:`<h3>What it is</h3><p>A neuron computes <code>a = φ(w·x + b)</code>: a weighted sum of inputs plus a bias, passed through an activation φ. A layer is many neurons; a network is layers in sequence.</p>
+<h3>Why nonlinearity</h3><p>Stacking purely linear layers collapses into one linear map, so depth would add nothing. Activations such as ReLU, sigmoid and tanh let networks bend decision boundaries. Experiment with the inputs fixed at x=(1.5, −1):</p>`,
+w:'neuron',
+b2:`<h3>How it learns</h3><p>Forward pass computes predictions, the loss scores them, backpropagation applies the chain rule to get ∂L/∂w for every weight, and gradient descent updates them.</p>
+<h3>Where and limits</h3><p>Vision, speech, language. Networks need lots of data and compute, can overfit, and are hard to interpret.</p>`,
+q:[['Why is an activation function needed?',['Speed','To make the model non-linear','To reduce parameters'],1,'Without it, many layers equal one linear layer.'],['ReLU(−3) =',['−3','0','3'],1,'ReLU = max(0, z).']],
+f:[['Neuron','a = φ(w·x + b)'],['ReLU','max(0, z)']]},
+{id:'llm-1',t:'Embeddings and similarity',tr:'llm',lv:'Intermediate',min:14,pre:['dl-1'],tags:['embeddings','vector','cosine','search'],d:'Turning meaning into geometry so machines can search by similarity.',
+b:`<h3>What it is</h3><p>An embedding model maps text (or images) to a vector, typically hundreds to thousands of numbers, so that similar meanings land close together.</p>
+<h3>How similarity works</h3><p><b>Cosine similarity</b> = (a·b)/(‖a‖‖b‖) compares direction and ignores length. Range −1 to 1. Rotate the two vectors:</p>`,
+w:'cos',
+b2:`<h3>Where it is used</h3><p>Semantic search, recommendations, clustering, deduplication and retrieval in RAG. A vector database stores embeddings and finds nearest neighbours quickly, usually with approximate indexes such as HNSW.</p>
+<h3>Limits</h3><p>Embeddings reflect their training data; domain jargon, negation and numbers are often handled poorly. Always evaluate retrieval on your own data.</p>`,
+q:[['Cosine similarity of identical directions is…',['0','1','−1'],1,'Angle 0 gives cos = 1.'],['It ignores…',['Direction','Vector length','Both'],1,'It is normalised by magnitude.']],
+f:[['Cosine similarity','(a·b)/(‖a‖‖b‖), direction only.'],['Approximate nearest neighbour','Fast, slightly inexact vector search (e.g. HNSW).']]},
+{id:'llm-2',t:'Softmax, temperature and next-token choice',tr:'llm',lv:'Intermediate',min:13,pre:['dl-1'],tags:['llm','softmax','sampling','attention'],d:'How raw scores become probabilities, in attention and in text generation.',
+b:`<h3>What it is</h3><p>Softmax turns scores (logits) into probabilities: <code>pᵢ = e^(zᵢ/T) / Σ e^(zⱼ/T)</code>. It appears twice in a transformer: attention weights are softmax(QKᵀ/√d), and the final layer produces a softmax over the vocabulary for the next token.</p>
+<h3>Temperature</h3><p>T divides the logits. Low T sharpens the distribution (near-greedy, repetitive); high T flattens it (diverse, riskier).</p>`,
+w:'soft',
+b2:`<h3>Limits</h3><p>Temperature changes only the shape of the distribution, not what the model knows. High T does not make a model more creative in a deep sense; it makes unlikely tokens likelier. Top-p and top-k truncate the tail before sampling.</p>`,
+q:[['Lower temperature makes output…',['More random','More deterministic','Longer'],1,'The top token dominates.'],['Why divide by √d in attention?',['Keep dot products from growing with dimension','Save memory','Normalise tokens'],0,'Large scores would saturate the softmax.']],
+f:[['Temperature','Scales logits before softmax; low = sharp, high = flat.']]},
+{id:'llm-3',t:'How a RAG system works',tr:'llm',lv:'Intermediate',min:16,pre:['llm-1'],tags:['rag','retrieval','vector database','evaluation'],d:'Grounding an LLM in your own documents, stage by stage.',
+b:`<h3>What it is</h3><p>Retrieval-Augmented Generation fetches relevant passages at question time and gives them to an LLM, so answers use current, private knowledge without retraining. Step through the pipeline:</p>`,
+w:'step',sd:[['Chunk','Split documents into passages (e.g. 200–500 tokens, with overlap) so each holds one idea.'],['Embed','Convert each chunk to a vector with an embedding model.'],['Index','Store vectors plus metadata in a vector database for nearest-neighbour search.'],['Retrieve','Embed the question, fetch the top-k similar chunks; optionally rerank them.'],['Augment','Build a prompt: instructions + retrieved chunks + question.'],['Generate','The LLM answers, ideally citing the chunks.'],['Evaluate','Measure retrieval (recall@k) and answer faithfulness separately.']],
+b2:`<h3>Limits</h3><p>Most RAG failures are <b>retrieval failures</b>: bad chunking, weak embeddings, missing the right passage. The model can still hallucinate or ignore context. Build a test set of questions with known source passages before tuning anything.</p>`,
+q:[['What should you evaluate first when answers are wrong?',['The LLM only','Whether the right chunks were retrieved','The UI'],1,'If retrieval misses, generation cannot recover.'],['Why overlap chunks?',['Save storage','Avoid cutting an idea across a boundary','Speed'],1,'Overlap preserves context at the edges.']],
+f:[['RAG','Retrieve relevant text, add to the prompt, then generate.'],['recall@k','Fraction of questions whose correct passage is in the top k results.']]},
+{id:'sys-1',t:'What happens when you load a URL',tr:'sys',lv:'Beginner',min:14,pre:[],tags:['networking','dns','http','tls'],d:'DNS, TCP, TLS and HTTP end to end.',
+b:`<h3>What it is</h3><p>Typing a URL triggers a chain of independent systems. Knowing each stage tells you where latency and failures come from.</p>`,
+w:'step',sd:[['Cache','Browser and OS check their caches for the IP address before asking the network.'],['DNS','A recursive resolver asks a root server, then the TLD server (.com), then the authoritative server, and caches the answer for its TTL.'],['TCP','Three-way handshake (SYN, SYN-ACK, ACK) opens a reliable connection to the server IP.'],['TLS','Client and server agree on keys and the server proves its identity with a certificate, so traffic is encrypted.'],['HTTP','The browser sends a request such as GET /; a load balancer routes it to an application server.'],['Backend','The app may hit a cache and a database, then builds a response.'],['Render','The browser parses HTML, fetches CSS, JS and images, and paints the page.']],
+b2:`<h3>Limits and gotchas</h3><p>DNS caching means changes propagate slowly. HTTP/3 replaces TCP with QUIC over UDP to cut handshake latency. Each stage adds round trips, which is why CDNs, keep-alive and caching matter.</p>`,
+q:[['Which server finally returns the IP for example.com?',['Root','TLD','Authoritative'],2,'Root and TLD only refer the resolver onward.'],['What does TLS provide?',['Name lookup','Encryption and server authentication','Load balancing'],1,'Via certificates and key exchange.']],
+f:[['TTL (DNS)','How long a resolver may cache a record.'],['TCP handshake','SYN, SYN-ACK, ACK.']]},
+{id:'sys-2',t:'Caching and LRU eviction',tr:'sys',lv:'Intermediate',min:12,pre:['py-1'],tags:['cache','performance','data structures'],d:'Trading memory for speed and deciding what to throw away.',
+b:`<h3>What it is</h3><p>A cache keeps recent or popular data in fast storage. A <b>hit</b> skips slow work; a <b>miss</b> pays full cost. When full, an eviction policy decides what leaves. <b>LRU</b> evicts the least recently used item. The cache below holds 3 items; click keys to request them:</p>`,
+w:'lru',
+b2:`<h3>How it is built</h3><p>A hash map plus a doubly linked list gives O(1) lookup and O(1) recency updates.</p>
+<h3>Limits</h3><p>LRU suffers on large sequential scans, which flush useful entries. Caches also create staleness and invalidation problems: decide TTLs and write strategy (write-through or write-back) deliberately.</p>`,
+q:[['Cache holds A,B,C (C newest). Request D. What is evicted?',['C','A','B'],1,'A is least recently used.'],['LRU is O(1) using…',['Array','Hash map + doubly linked list','Heap'],1,'Map finds, list reorders.']],
+f:[['LRU','Evict the least recently used entry.'],['Cache hit ratio','hits / (hits + misses).']]}];
+const byId=id=>L.find(l=>l.id===id);
+const W={
+gd(e){e.innerHTML=`<b>Gradient descent on L(x)=x²</b><svg viewBox="0 0 300 160"><path id=pp fill=none stroke="var(--a2)" stroke-width=2 /><g id=tr></g><circle id=pt r=7 fill="var(--ac)"/></svg><label>Learning rate η = <b id=lv></b><input type=range id=lr min=.05 max=1.1 step=.05 value=.3></label><button class=btn id=st>Step</button><button class="btn g" id=rs>Reset</button><button class="btn g" id=r10>Run 10</button><p id=go class=muted></p>`;
+const X=x=>150+Math.max(-4.2,Math.min(4.2,x))*35,Y=x=>150-Math.min(Math.max(-4.2,x),4.2)**2*8.5;let x,h;
+e.querySelector('#pp').setAttribute('d',Array.from({length:33},(_,i)=>{const v=-4+i*.25;return(i?'L':'M')+X(v)+' '+Y(v)}).join(''));
+const lr=()=>+e.querySelector('#lr').value;
+function dr(){e.querySelector('#lv').textContent=lr().toFixed(2);e.querySelector('#pt').setAttribute('cx',X(x));e.querySelector('#pt').setAttribute('cy',Y(x));e.querySelector('#tr').innerHTML=h.map(v=>`<circle cx=${X(v)} cy=${Y(v)} r=3 fill="var(--ac)" opacity=.4 />`).join('');const r=lr(),m=r<.5?'Smooth convergence.':r==.5?'Perfect step: lands on 0.':r<1?'Overshoots each step but still converges.':r==1?'Flips between x and −x forever.':'Diverges: each step overshoots further.';e.querySelector('#go').textContent=`x = ${x.toExponential?x.toFixed(3):x}, loss = ${(x*x).toFixed(3)}. ${m}`}
+const rs=()=>{x=3;h=[3];dr()},sp=()=>{x=x*(1-2*lr());h.push(x);dr()};
+e.querySelector('#st').onclick=sp;e.querySelector('#rs').onclick=rs;e.querySelector('#lr').oninput=rs;e.querySelector('#r10').onclick=()=>{for(let i=0;i<10;i++)sp()};rs()},
+neuron(e){e.innerHTML=`<b>One neuron, x=(1.5, −1)</b><label>w₁ <input type=range id=a min=-3 max=3 step=.1 value=1></label><label>w₂ <input type=range id=b min=-3 max=3 step=.1 value=1></label><label>bias <input type=range id=c min=-3 max=3 step=.1 value=0></label><select id=f><option>relu<option>sigmoid<option>tanh</select><p id=o></p><div class=bar><i id=br></i></div>`;
+const u=()=>{const w1=+e.querySelector('#a').value,w2=+e.querySelector('#b').value,b=+e.querySelector('#c').value,z=w1*1.5+w2*-1+b,f=e.querySelector('#f').value,a=f=='relu'?Math.max(0,z):f=='tanh'?Math.tanh(z):1/(1+Math.exp(-z));e.querySelector('#o').innerHTML=`z = ${w1}×1.5 + ${w2}×(−1) + ${b} = <b>${z.toFixed(2)}</b> → ${f}(z) = <b>${a.toFixed(3)}</b>`;e.querySelector('#br').style.width=Math.min(100,Math.abs(a)*(f=='relu'?25:100))+'%'};
+e.querySelectorAll('input,select').forEach(i=>i.oninput=u);u()},
+cos(e){e.innerHTML=`<b>Two vectors in 2D</b><svg viewBox="-100 -100 200 200"><line id=l1 x1=0 y1=0 stroke="var(--ac)" stroke-width=3 /><line id=l2 x1=0 y1=0 stroke="var(--a2)" stroke-width=3 /><circle r=3 fill=currentColor /></svg><label>Vector A angle <input type=range id=a min=0 max=360 value=30></label><label>Vector B angle <input type=range id=b min=0 max=360 value=80></label><p id=o></p>`;
+const u=()=>{const a=+e.querySelector('#a').value*Math.PI/180,b=+e.querySelector('#b').value*Math.PI/180;[['#l1',a,80],['#l2',b,55]].forEach(([s,t,r])=>{const l=e.querySelector(s);l.setAttribute('x2',r*Math.cos(t));l.setAttribute('y2',-r*Math.sin(t))});const c=Math.cos(a-b);e.querySelector('#o').innerHTML=`cosine similarity = <b>${c.toFixed(3)}</b> (${c>.9?'very similar':c>.3?'related':c>-.3?'unrelated':'opposed'}). B is drawn shorter on purpose: length does not matter.`};
+e.querySelectorAll('input').forEach(i=>i.oninput=u);u()},
+soft(e){const k=['cat','dog','car','the'],z=[2,1.5,.3,1];e.innerHTML=`<b>Next-token distribution after “The pet was a”</b><label>Temperature T = <b id=tv></b><input type=range id=t min=.1 max=2.5 step=.1 value=1></label><div id=bs></div>`;
+const u=()=>{const T=+e.querySelector('#t').value;e.querySelector('#tv').textContent=T;const x=z.map(v=>Math.exp(v/T)),s=x.reduce((a,b)=>a+b);e.querySelector('#bs').innerHTML=x.map((v,i)=>`<div style="display:flex;gap:8px;align-items:center;margin:4px 0"><span style="width:36px">${k[i]}</span><div class=bar style="flex:1"><i style="width:${v/s*100}%"></i></div><span style="width:46px">${(v/s*100).toFixed(1)}%</span></div>`).join('')};
+e.querySelector('#t').oninput=u;u()},
+step(e,l){let i=0;const d=l.sd;e.innerHTML=`<div class=chips id=ch></div><div class=card id=ds></div><button class="btn g" id=pv>Back</button><button class=btn id=nx>Next</button>`;
+const u=()=>{e.querySelector('#ch').innerHTML=d.map((s,j)=>`<span class="chip ${j==i?'on':''}" data-j=${j}>${j+1}. ${s[0]}</span>`).join('');e.querySelector('#ds').innerHTML=`<b>${d[i][0]}</b><br>${d[i][1]}`;e.querySelectorAll('.chip').forEach(c=>c.onclick=()=>{i=+c.dataset.j;u()})};
+e.querySelector('#nx').onclick=()=>{i=Math.min(d.length-1,i+1);u()};e.querySelector('#pv').onclick=()=>{i=Math.max(0,i-1);u()};u()},
+lru(e){let c=[],h=0,m=0,msg='Click a key to request it.';e.innerHTML=`<div id=ks></div><div id=cs class=chips style="margin:10px 0"></div><p id=o></p>`;
+const u=()=>{e.querySelector('#ks').innerHTML='ABCDE'.split('').map(k=>`<button class=btn data-k=${k}>${k}</button>`).join('');e.querySelector('#cs').innerHTML=['(oldest)',...c,'(newest)'].map(x=>`<span class="chip ${x[0]=='('?'':'on'}">${x}</span>`).join('');e.querySelector('#o').innerHTML=`${msg}<br><span class=muted>hits ${h} · misses ${m} · hit rate ${h+m?Math.round(100*h/(h+m)):0}%</span>`;e.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{const k=b.dataset.k;if(c.includes(k)){h++;c=c.filter(x=>x!=k);c.push(k);msg=k+': HIT, moved to newest.'}else{m++;msg=k+': MISS.';if(c.length==3)msg+=' Evicted '+c.shift()+'.';c.push(k)}u()})};u()}};
+const pctDone=()=>Math.round(100*L.filter(l=>S.done[l.id]).length/L.length);
+const card=l=>`<a class=card href="#l-${l.id}"><span class=tag style="color:${T[l.tr][1]}">${T[l.tr][0]}</span><span class=tag>${l.lv} · ${l.min} min</span>${S.done[l.id]?'<span class=tag>✓ done</span>':''}${S.bm[l.id]?'<span class=tag>★</span>':''}<br><b>${l.t}</b><div class=muted>${l.d}</div></a>`;
+const V={
+home(){const p=pctDone(),nx=L.find(l=>!S.done[l.id]&&l.pre.every(x=>S.done[x])),rv=L.filter(l=>S.done[l.id]&&(!S.q[l.id]||S.q[l.id].s<S.q[l.id].t));
+return`<div class=hero><svg width=84 height=84 viewBox="0 0 84 84"><circle cx=42 cy=42 r=34 fill=none stroke="#fff5" stroke-width=8 /><circle cx=42 cy=42 r=34 fill=none stroke=#fff stroke-width=8 stroke-linecap=round stroke-dasharray="${p*2.136} 214" transform="rotate(-90 42 42)"/><text x=42 y=47 text-anchor=middle fill=#fff font-size=18 font-weight=700>${p}%</text></svg><div><h1 style="margin:0">Welcome back</h1><p>${L.filter(l=>S.done[l.id]).length} of ${L.length} lessons complete. Consistency beats intensity: one lesson a day.</p></div></div>
+<h2>Up next</h2>${nx?card(nx):'<div class=card>All available lessons complete. Try the projects.</div>'}
+<h2>Revise</h2>${rv.length?rv.map(card).join(''):'<p class=muted>Nothing to revise yet. Lessons where you missed quiz questions appear here.</p>'}
+<h2>Tracks</h2>${Object.entries(T).map(([k,v])=>{const a=L.filter(l=>l.tr==k),d=a.filter(l=>S.done[l.id]).length;return`<div class=card><b style="color:${v[1]}">${v[0]}</b> <span class=muted>${d}/${a.length} built · ${PL[k].length} planned</span><div class=bar><i style="width:${100*d/a.length}%"></i></div></div>`}).join('')}
+<h2>Bookmarks</h2>${L.filter(l=>S.bm[l.id]).map(card).join('')||'<p class=muted>Star a lesson to keep it here.</p>'}`},
+roadmap(){return`<h1>Roadmap</h1><p class=muted>Lessons are ordered by prerequisites. Dashed items are planned expansions.</p>`+Object.entries(T).map(([k,v])=>`<h2 style="color:${v[1]}">${v[0]}</h2>`+L.filter(l=>l.tr==k).map(l=>card(l)+(l.pre.length?`<div class=muted style="margin:-4px 0 6px 10px">needs: ${l.pre.map(x=>byId(x).t).join(', ')}</div>`:'')).join('')+PL[k].map(x=>`<div class="card plan">${x}<div class=muted>Planned</div></div>`).join('')).join('')},
+lib(){setTimeout(()=>{const f=()=>{const q=$('#s').value.toLowerCase(),t=$('#tf').value;$('#res').innerHTML=L.filter(l=>(!t||l.tr==t)&&(l.t+l.d+l.tags.join(' ')+T[l.tr][0]).toLowerCase().includes(q)).map(card).join('')||'<p class=muted>No matches.</p>'};$('#s').oninput=f;$('#tf').onchange=f;f()});
+return`<h1>Library</h1><input type=search id=s placeholder="Search topics, tags, concepts…"><select id=tf style="margin-top:8px"><option value="">All tracks${Object.entries(T).map(([k,v])=>`<option value=${k}>${v[0]}`).join('')}</select><div id=res></div>`},
+cards(){const all=[];L.forEach(l=>l.f.forEach((c,i)=>all.push({k:l.id+':'+i,c,l})));let cur,fl=0;
+function pick(){const m=Math.min(...all.map(a=>S.fc[a.k]||0)),p=all.filter(a=>(S.fc[a.k]||0)==m);cur=p[Math.floor(Math.random()*p.length)];fl=0;draw()}
+function draw(){const mast=all.filter(a=>(S.fc[a.k]||0)>=3).length;$('#fc').innerHTML=`<p class=muted>${cur.l.t} · mastered ${mast}/${all.length}</p><div class="card fc" id=fcc>${fl?cur.c[1]:'<b>'+cur.c[0]+'</b>'}</div><button class="btn g" id=fl>Flip</button><button class=btn id=ok style="background:var(--ok)">Got it</button><button class=btn id=ag style="background:var(--bad)">Again</button>`;$('#fcc').onclick=$('#fl').onclick=()=>{fl=!fl;draw()};$('#ok').onclick=()=>{S.fc[cur.k]=Math.min(3,(S.fc[cur.k]||0)+1);save();pick()};$('#ag').onclick=()=>{S.fc[cur.k]=0;save();pick()}}
+setTimeout(pick);return`<h1>Flashcards</h1><p class=muted>Cards you miss come back first; three “Got it” answers in a row master a card.</p><div id=fc></div>`},
+proj(){return`<h1>Projects</h1><p class=muted>Building is where understanding sticks. Tick them off as you finish.</p>`+PJ.map((p,i)=>`<div class=card><label><input type=checkbox data-i=${i} ${S.p[i]?'checked':''}> <b>${p[0]}</b></label><div class=muted>${p[1]}</div>${p[2].map(x=>`<a class=tag href="#l-${x}">${byId(x).t}</a>`).join('')}</div>`).join('')+(setTimeout(()=>document.querySelectorAll('[data-i]').forEach(c=>c.onchange=()=>{S.p[c.dataset.i]=c.checked;save()})),'')},
+lesson(id){const l=byId(id);if(!l)return'<p>Not found.</p>';
+setTimeout(()=>{if(l.w)W[l.w]($('#w'),l);const ans={};let ok=0,n=0;document.querySelectorAll('.qq').forEach(q=>{const qi=+q.dataset.q,Q=l.q[qi];q.querySelectorAll('.opt').forEach((b,oi)=>b.onclick=()=>{if(ans[qi]!=null)return;ans[qi]=oi;n++;b.classList.add(oi==Q[2]?'ok':'no');if(oi==Q[2])ok++;else q.querySelectorAll('.opt')[Q[2]].classList.add('ok');q.querySelector('.ex').textContent=Q[3];if(n==l.q.length){S.q[l.id]={s:ok,t:n};save();$('#sc').textContent=`Score: ${ok}/${n}`+(ok==n?' 🎉':'. Review and retry by reopening the lesson.')}})});
+$('#nt').value=S.n[id]||'';$('#nt').oninput=e=>{S.n[id]=e.target.value;save()};
+$('#cd').onclick=()=>{S.done[id]=!S.done[id];save();$('#cd').textContent=S.done[id]?'✓ Completed':'Mark complete'};$('#bk').onclick=()=>{S.bm[id]=!S.bm[id];save();$('#bk').textContent=S.bm[id]?'★ Bookmarked':'☆ Bookmark'}});
+const rel=L.filter(x=>x.id!=id&&x.tags.some(t=>l.tags.includes(t))),nx=L[L.indexOf(l)+1];
+return`<span class=tag style="color:${T[l.tr][1]}">${T[l.tr][0]}</span><span class=tag>${l.lv} · ${l.min} min</span>${l.tags.map(t=>`<span class=tag>#${t}</span>`).join('')}<h1>${l.t}</h1>
+${l.pre.length?`<p class=muted>Prerequisites: ${l.pre.map(x=>`<a href="#l-${x}">${byId(x).t}</a>`).join(', ')}</p>`:''}${l.b}<div class=wd id=w style="${l.w?'':'display:none'}"></div>${l.b2||''}
+${l.c?`<h3>Challenge</h3><div class=card>${l.c[0]}<details><summary>Reveal answer</summary>${l.c[1]}</details></div>`:''}
+<h3>Check your understanding</h3>${l.q.map((q,i)=>`<div class="card qq" data-q=${i}><b>${q[0]}</b>${q[1].map(o=>`<button class=opt>${o}</button>`).join('')}<div class="ex muted"></div></div>`).join('')}<p id=sc></p>
+<h3>Your notes</h3><textarea id=nt rows=4 placeholder="Write it in your own words…"></textarea>
+<p><button class=btn id=cd>${S.done[id]?'✓ Completed':'Mark complete'}</button><button class="btn g" id=bk>${S.bm[id]?'★ Bookmarked':'☆ Bookmark'}</button></p>
+${rel.length?`<h3>Related</h3>${rel.map(card).join('')}`:''}${nx?`<h3>Next</h3>${card(nx)}`:''}`}};
+const NAV=[['home','Home'],['roadmap','Roadmap'],['lib','Library'],['cards','Cards'],['proj','Projects']];
+function route(){const h=location.hash.slice(1)||'home',v=h.startsWith('l-')?'lesson':h in V?h:'home';
+$('#nav').innerHTML='<b>Cortex</b>'+NAV.map(([k,n])=>`<a href="#${k}" class="${k==h||(k=='roadmap'&&v=='lesson')?'on':''}">${n}</a>`).join('')+'<button id=th aria-label="Toggle theme">◐</button>';
+$('#th').onclick=()=>{const d=document.documentElement,dk=d.dataset.theme?d.dataset.theme=='dark':matchMedia('(prefers-color-scheme:dark)').matches;d.dataset.theme=S.th=dk?'light':'dark';save()};
+$('#m').innerHTML=v=='lesson'?V.lesson(h.slice(2)):V[v]();scrollTo(0,0)}
+addEventListener('hashchange',route);route();
+</script></body></html>
